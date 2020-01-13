@@ -1,3 +1,5 @@
+/* eslint-disable strict */
+
 const store = {
   items: [
     { id: cuid(), name: 'apples', checked: false },
@@ -5,14 +7,16 @@ const store = {
     { id: cuid(), name: 'milk', checked: true },
     { id: cuid(), name: 'bread', checked: false }
   ],
-  hideCheckedItems: false
+  hideCheckedItems: false,
 };
+
+
 
 const generateItemElement = function (item) {
   let itemTitle = `<span class='shopping-item shopping-item__checked'>${item.name}</span>`;
   if (!item.checked) {
     itemTitle = `
-     <span class='shopping-item'>${item.name}</span>
+     <span class='shopping-item'><input type="text" value="${item.name}"</span>
     `;
   }
 
@@ -26,9 +30,24 @@ const generateItemElement = function (item) {
         <button class='shopping-item-delete js-item-delete'>
           <span class='button-label'>delete</span>
         </button>
+        <button class='shopping-item-edit js-item-edit'>
+        <span class='button-label'>edit</span>
+      </button>
       </div>
     </li>`;
 };
+
+function getItemName(){
+  // retrieves item name from array of objects
+}
+
+
+function editName(){
+  $('.js-shopping-list').on('click', '.shopping-item-edit', function(event){
+    // on click will allow you to edit name of item in shopping list
+  });
+}
+
 
 const generateShoppingItemsString = function (shoppingList) {
   const items = shoppingList.map((item) => generateItemElement(item));
@@ -88,6 +107,8 @@ const handleItemCheckClicked = function () {
     render();
   });
 };
+
+
 
 const getItemIdFromElement = function (item) {
   return $(item)
@@ -160,7 +181,11 @@ const handleShoppingList = function () {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleToggleFilterClick();
+  getItemName();
+  editName();
 };
 
 // when the page loads, call `handleShoppingList`
 $(handleShoppingList);
+
+// user can edit the title of an item
